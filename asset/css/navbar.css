@@ -1,0 +1,33 @@
+body {
+    padding-top: 10px;
+}
+.navbar {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: fixed;
+    top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+.navbar-nav {
+    margin-left: auto;
+}
+.navbar-toggler {
+    border: none !important; /* Menghapus border dengan prioritas tinggi */
+    box-shadow: none !important; /* Jika ada bayangan pada tombol */
+}
+.navbar-toggler:focus {
+    outline: none !important; /* Menghapus outline saat tombol di-klik */
+}
+@media (max-width: 768px) {
+    .navbar {
+        top: 5px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
