@@ -1,0 +1,23 @@
+/* ../asset/css/perbandingan.css */
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.blue{
+    color: rgb(94, 94, 204);
+}
+
+.row {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.col-xs-6 {
+    flex: 1;
+    min-width: 50%;
+}

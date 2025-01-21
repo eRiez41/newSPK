@@ -32,7 +32,7 @@ include '../komponen/navbar.php';
             <div class="col-md-4 text-center">
                 <i class="fas fa-trophy fa-3x mb-3"></i>
                 <h3>Ranking Terbaik</h3>
-                <p>Lihat smartphone terbaik untuk setiap kategori</p>
+                <p>Lihat smartphone terbaik untuk setiap kategori yang di rekomendasikan</p>
             </div>
         </div>
 

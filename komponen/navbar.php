@@ -29,7 +29,7 @@
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'rekomendasi.php' ? 'active' : ''; ?>" href="rekomendasi.php">Rekomendasi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'rangking.php' ? 'active' : ''; ?>" href="rangking.php">Rangking</a>
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'perbandingan.php' ? 'active' : ''; ?>" href="perbandingan.php">Perbandingan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'tentang.php' ? 'active' : ''; ?>" href="tentang.php">Tentang</a>
