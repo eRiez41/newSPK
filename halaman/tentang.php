@@ -8,7 +8,7 @@ include '../komponen/navbar.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang - EzPhone</title>
+    <title>Tentang - EzPhoneGuide</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../asset/css/style.css">
@@ -38,8 +38,8 @@ include '../komponen/navbar.php';
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mt-5">Tentang EzPhone</h1>
-        <p class="text-center">EzPhone adalah aplikasi yang dibuat sebagai tugas akhir skripsi.</p>
+        <h1 class="text-center mt-5">Tentang EzPhoneGuide</h1>
+        <p class="text-center">EzPhoneGuide adalah aplikasi yang dibuat sebagai tugas akhir skripsi.</p>
 
         <div class="row mt-5">
             <div class="col-md-6">

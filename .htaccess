@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Aturan untuk menghilangkan 'halaman' dari URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ halaman/$1 [L,QSA]

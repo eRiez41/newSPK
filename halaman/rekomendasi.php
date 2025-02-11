@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekomendasi - EzPhone</title>
+    <title>Rekomendasi - EzPhone-Guide</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -36,8 +36,7 @@ if ($result->num_rows > 0) {
     <div class="container mt-5">
         <h1 class="text-center mt-5">Rekomendasi Smartphone</h1>
 
-        <form id="rekomendasiForm" action="hasil_rekomendasi.php" method="POST">
-        <!-- <form id="rekomendasiForm" action="../algoritma/skoring.php" method="POST"> -->
+        <form id="rekomendasiForm" action="hasil.php" method="POST">
             <div class="form-group">
                 <label for="kebutuhan">Pilih Kebutuhan</label>
                 <select class="form-control" id="kebutuhan" name="kebutuhan">
@@ -90,15 +89,16 @@ if ($result->num_rows > 0) {
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block btn-animated">Dapatkan Rekomendasi</button>
+            <button type="submit" class="btn btn-dark btn-lg btn-block btn-animated">Dapatkan Rekomendasi</button>
         </form>
     </div>
-
+<br><br>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../asset/js/script.js"></script>
     <script src="../asset/js/rekomendasi.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 </body>
 </html>

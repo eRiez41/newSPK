@@ -1,5 +1,3 @@
-// ../asset/js/perbandingan.js
-
 // Fungsi untuk membersihkan dan mengonversi nilai harga
 function cleanAndConvertHarga(harga) {
     // Menghapus karakter yang tidak valid
@@ -75,6 +73,17 @@ function compareRamAndMemory(value1, value2) {
     return value1 > value2 ? 'green' : 'red';
 }
 
+// Fungsi untuk membandingkan skor AnTuTu
+function compareAntutuScore(score1, score2) {
+    // Mengonversi skor ke integer
+    score1 = parseInt(score1, 10);
+    score2 = parseInt(score2, 10);
+    if (score1 === score2) {
+        return 'blue';
+    }
+    return score1 > score2 ? 'green' : 'red';
+}
+
 // Fungsi untuk menampilkan perbandingan smartphone
 function displayComparison(smartphone, antutuScore, smartphone2, antutuScore2) {
     const container = document.createElement('div');
@@ -101,7 +110,7 @@ function displayComparison(smartphone, antutuScore, smartphone2, antutuScore2) {
         { label: 'Technology', value: smartphone['Technology'] },
         { label: 'Screen Resolution', value: smartphone['Screen Resolution'], compare: compareScreenResolution(smartphone['Screen Resolution'], smartphone2['Screen Resolution']) },
         { label: 'Daya Fast Charging', value: smartphone['Daya Fast Charging'], compare: getComparisonColor(smartphone['Daya Fast Charging'], smartphone2['Daya Fast Charging']) },
-        { label: 'Skor AnTuTu', value: antutuScore, compare: getComparisonColor(antutuScore, antutuScore2) },
+        { label: 'Skor AnTuTu', value: antutuScore, compare: compareAntutuScore(antutuScore, antutuScore2) },
         { label: 'Prosesor', value: smartphone['Prosesor'] },
         { label: 'GPU', value: smartphone['GPU'] },
         { label: 'Ukuran Layar', value: `${smartphone['Ukuran Layar']} Inci`, compare: getComparisonColor(smartphone['Ukuran Layar'], smartphone2['Ukuran Layar']) },

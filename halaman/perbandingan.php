@@ -3,11 +3,9 @@
 include '../komponen/navbar.php';
 // Memasukkan file koneksi
 include '../koneksi/koneksi.php';
-// Memasukkan fungsi perbandingan
-include '../algoritma/perbandingan.php';
 
 // Mengambil data smartphone dari database
-$query = "SELECT id, `Nama Produk` FROM spek_hp";
+$query = "SELECT id, `Nama Produk`, `RAM (GB)`, `Memori Internal (GB)` FROM spek_hp";
 $result = $conn->query($query);
 
 if (!$result) {
@@ -88,7 +86,7 @@ if (isset($_POST['smartphone1']) && isset($_POST['smartphone2'])) {
                 <select class="form-control" id="smartphone1" name="smartphone1">
                     <?php foreach ($smartphones as $smartphone): ?>
                         <option value="<?php echo htmlspecialchars($smartphone['id']); ?>">
-                            <?php echo htmlspecialchars($smartphone['Nama Produk']); ?>
+                            <?php echo htmlspecialchars($smartphone['Nama Produk']) . " " . htmlspecialchars($smartphone['RAM (GB)']) . "  / " . htmlspecialchars($smartphone['Memori Internal (GB)']) ; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -99,7 +97,7 @@ if (isset($_POST['smartphone1']) && isset($_POST['smartphone2'])) {
                 <select class="form-control" id="smartphone2" name="smartphone2">
                     <?php foreach ($smartphones as $smartphone): ?>
                         <option value="<?php echo htmlspecialchars($smartphone['id']); ?>">
-                            <?php echo htmlspecialchars($smartphone['Nama Produk']); ?>
+                            <?php echo htmlspecialchars($smartphone['Nama Produk']) . " " . htmlspecialchars($smartphone['RAM (GB)']) . "  / " . htmlspecialchars($smartphone['Memori Internal (GB)']) ; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
