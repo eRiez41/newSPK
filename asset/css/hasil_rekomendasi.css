@@ -30,6 +30,7 @@
     margin-right: 20px;
     position: relative;
     left: 10px;
+    z-index: 1; /* Tambahkan z-index untuk memastikan gambar tetap di atas */
 }
 
 .card-img {
@@ -92,8 +93,11 @@
     cursor: pointer;
 }
 
+
 .table-container {
     margin-top: 20px;
+    position: relative;
+    z-index: 0; /* Pastikan tabel memiliki z-index yang lebih rendah */
 }
 
 .hidden {
