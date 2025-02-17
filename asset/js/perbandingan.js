@@ -1,3 +1,64 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const brand1Select = document.getElementById('brand1');
+    const brand2Select = document.getElementById('brand2');
+    const smartphone1Select = document.getElementById('smartphone1');
+    const smartphone2Select = document.getElementById('smartphone2');
+
+    const fetchSmartphones = async (brand) => {
+        const response = await fetch('fetch_smartphones.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `brand=${brand}`,
+        });
+        return response.json();
+    };
+
+    const populateSmartphones = async (brandSelect, smartphoneSelect) => {
+        const brand = brandSelect.value;
+        if (brand) {
+            const smartphones = await fetchSmartphones(brand);
+            smartphoneSelect.innerHTML = '<option value="">Pilih Smartphone</option>';
+            smartphones.forEach((smartphone) => {
+                const option = document.createElement('option');
+                option.value = smartphone.id;
+                option.textContent = `${smartphone['Nama Produk']} ${smartphone['RAM (GB)']} / ${smartphone['Memori Internal (GB)']}`;
+                smartphoneSelect.appendChild(option);
+            });
+        } else {
+            smartphoneSelect.innerHTML = '<option value="">Pilih Smartphone</option>';
+        }
+    };
+
+    // Panggil fungsi populateSmartphones saat halaman dimuat
+    if (brand1Select.value) {
+        populateSmartphones(brand1Select, smartphone1Select);
+    }
+    if (brand2Select.value) {
+        populateSmartphones(brand2Select, smartphone2Select);
+    }
+
+    brand1Select.addEventListener('change', () => populateSmartphones(brand1Select, smartphone1Select));
+    brand2Select.addEventListener('change', () => populateSmartphones(brand2Select, smartphone2Select));
+
+    const comparisonResult = document.getElementById('comparisonResult');
+    if (comparisonResult) {
+        const smartphone1 = JSON.parse(comparisonResult.dataset.smartphone1);
+        const smartphone2 = JSON.parse(comparisonResult.dataset.smartphone2);
+        const antutuScore1 = comparisonResult.dataset.antutuScore1;
+        const antutuScore2 = comparisonResult.dataset.antutuScore2;
+
+        const row = document.createElement('div');
+        row.classList.add('row');
+
+        row.appendChild(displayComparison(smartphone1, antutuScore1, smartphone2, antutuScore2));
+        row.appendChild(displayComparison(smartphone2, antutuScore2, smartphone1, antutuScore1));
+
+        comparisonResult.appendChild(row);
+    }
+});
+
 // Fungsi untuk membersihkan dan mengonversi nilai harga
 function cleanAndConvertHarga(harga) {
     // Menghapus karakter yang tidak valid
@@ -130,21 +191,3 @@ function displayComparison(smartphone, antutuScore, smartphone2, antutuScore2) {
 
     return container;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const comparisonResult = document.getElementById('comparisonResult');
-    if (comparisonResult) {
-        const smartphone1 = JSON.parse(comparisonResult.dataset.smartphone1);
-        const smartphone2 = JSON.parse(comparisonResult.dataset.smartphone2);
-        const antutuScore1 = comparisonResult.dataset.antutuScore1;
-        const antutuScore2 = comparisonResult.dataset.antutuScore2;
-
-        const row = document.createElement('div');
-        row.classList.add('row');
-
-        row.appendChild(displayComparison(smartphone1, antutuScore1, smartphone2, antutuScore2));
-        row.appendChild(displayComparison(smartphone2, antutuScore2, smartphone1, antutuScore1));
-
-        comparisonResult.appendChild(row);
-    }
-});

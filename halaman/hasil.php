@@ -178,155 +178,8 @@ function getFullSpecification($id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil Rekomendasi - EzPhone-Guide</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../asset/css/style.css">
-    <style>
-    .card {
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-        position: relative;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-    }
-    .card-body {
-        display: flex;
-        align-items: center;
-    }
-    .card-number {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #007bff;
-        position: absolute;
-        top: 20px;
-        left: 20px;
-    }
-    .card-img-container {
-        flex: 0 0 120px;
-        margin-right: 20px;
-        position: relative;
-    }
-    .card-img {
-        max-width: 100%;
-        border-radius: 8px;
-    }
-    .card-content {
-        flex: 1;
-    }
-    .card-title {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-        color: #333;
-    }
-    .card-text {
-        font-size: 1rem;
-        color: #777;
-        margin-bottom: 5px;
-    }
-    .card-price {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #007bff;
-    }
-    .card-buttons {
-        margin-top: 10px;
-    }
-    .btn-yellow {
-        background-color: #FFC107;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        margin-right: 10px;
-        cursor: pointer;
-    }
-    .btn-blue {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        cursor: pointer;
-    }
-    .table-container {
-        margin-top: 20px;
-    }
-    .hidden {
-        display: none;
-    }
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        animation: fadeIn 0.5s;
-    }
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 2px solid #888;
-        border-radius: 10px;
-        width: 80%;
-        animation: slideIn 0.5s;
-    }
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-    @keyframes slideIn {
-        from {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-    @keyframes fadeOut {
-        from {
-            opacity: 1;
-        }
-        to {
-            opacity: 0;
-        }
-    }
-    @keyframes slideOut {
-        from {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-    }
-</style>
-
+    <!-- <link rel="stylesheet" href="../asset/css/style.css"> -->
+    <link rel="stylesheet" href="../asset/css/hasil_rekomendasi.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -356,7 +209,6 @@ function getFullSpecification($id) {
                 ],
                 'Fitur' => $fitur
             ];
-
 
             echo '<br>';
 
@@ -394,11 +246,21 @@ function getFullSpecification($id) {
 
             $result = $conn->query($query);
             $phones = [];
+            $processedIds = []; // Array untuk menyimpan ID yang telah diproses
 
             if ($result) {
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $antutuScore = $row['antutu_10'];
+                        $id = $row['id'];
+
+                        // Periksa apakah ID sudah diproses sebelumnya
+                        if (in_array($id, $processedIds)) {
+                            continue; // Lewati ID yang duplikat
+                        }
+
+                        // Tambahkan ID ke array jika belum diproses
+                        $processedIds[] = $id;
 
                         // Menghitung skor akhir sesuai kebutuhan
                         switch ($kebutuhan) {
@@ -468,6 +330,7 @@ function getFullSpecification($id) {
 
                         echo '<div class="card-buttons">';
                         echo '<button class="btn-yellow toggle-table">Perhitungan</button>';
+                        echo '<a href="https://forms.gle/ik7qbmuzU4ELgLdz5" class="btn-green" target="_blank">Penilaian</a>';
                         echo '<button class="btn-blue" onclick="showSpecification(' . $id . ')">Spesifikasi</button>';
                         echo '</div>';
                         echo '<div class="table-container hidden">';
@@ -503,47 +366,6 @@ function getFullSpecification($id) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('.toggle-table').click(function() {
-            $(this).closest('.card').find('.table-container').toggleClass('hidden');
-        });
-
-        // Fungsi untuk menampilkan modal spesifikasi
-        window.showSpecification = function(id) {
-            $.ajax({
-                url: 'get_specification.php', // Buat file PHP baru untuk mengambil spesifikasi
-                method: 'POST',
-                data: { id: id },
-                success: function(response) {
-                    $('#specificationContent').html(response);
-                    $('#specificationModal').show();
-                },
-                error: function() {
-                    alert('Terjadi kesalahan saat mengambil data spesifikasi.');
-                }
-            });
-        };
-
-        // Menutup modal saat tombol close diklik
-        $('.close').click(function() {
-            $('#specificationModal').fadeOut(500, function() {
-                $(this).css('display', 'none');
-            });
-            $('#specificationContent').css('animation', 'slideOut 0.5s');
-        });
-
-        // Menutup modal saat area di luar modal diklik
-        $(window).click(function(event) {
-            if (event.target == document.getElementById('specificationModal')) {
-                $('#specificationModal').fadeOut(500, function() {
-                    $(this).css('display', 'none');
-                });
-                $('#specificationContent').css('animation', 'slideOut 0.5s');
-            }
-        });
-    });
-</script>
-
+    <script src="../asset/js/hasilna.js"></script>
 </body>
 </html>
