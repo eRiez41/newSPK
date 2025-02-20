@@ -178,28 +178,25 @@ function getFullSpecification($id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil Rekomendasi - EzPhone-Guide</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="../asset/css/style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../asset/css/hasil_rekomendasi.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center mt-5">Hasil Rekomendasi Smartphone</h1>
 
         <?php
-        // Memeriksa apakah data dikirimkan melalui metode POST
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Mengumpulkan data yang dikirimkan
             $kebutuhan = isset($_POST['kebutuhan']) ? $_POST['kebutuhan'] : 'Tidak dipilih';
             $brand = isset($_POST['brand']) ? $_POST['brand'] : [];
             $hargaMin = isset($_POST['hargaMin']) ? (int)$_POST['hargaMin'] : 0;
             $hargaMax = isset($_POST['hargaMax']) ? (int)$_POST['hargaMax'] : PHP_INT_MAX;
             $fitur = isset($_POST['fitur']) ? $_POST['fitur'] : [];
 
-            // Format nilai harga menjadi format mata uang
             $hargaMinFormatted = "Rp " . number_format($hargaMin, 0, ',', '.');
             $hargaMaxFormatted = ($hargaMax == 999999999) ? "lebih dari Rp 15.000.000" : "Rp " . number_format($hargaMax, 0, ',', '.');
 
-            // Membuat array dari data yang dikirimkan
             $inputan = [
                 'Kebutuhan' => $kebutuhan,
                 'Brand' => $brand,
@@ -212,7 +209,6 @@ function getFullSpecification($id) {
 
             echo '<br>';
 
-            // Membangun query SQL
             $query = "
                 SELECT sp.*, s.antutu_10, CONCAT(sp.Brand, ' ', sp.`Nama Produk`) AS BrandNamaProduk
                 FROM spek_hp sp
@@ -221,13 +217,11 @@ function getFullSpecification($id) {
                 WHERE CAST(REPLACE(REPLACE(sp.Harga, 'Rp ', ''), '.', '') AS UNSIGNED) BETWEEN $hargaMin AND $hargaMax
             ";
 
-            // Tambahkan klausa WHERE untuk merek jika ada
             if (!empty($brand)) {
                 $brandList = implode("','", $brand);
                 $query .= " AND sp.Brand IN ('$brandList')";
             }
 
-            // Tambahkan klausa WHERE untuk fitur jika ada
             if (!empty($fitur)) {
                 foreach ($fitur as $feature) {
                     switch ($feature) {
@@ -246,7 +240,7 @@ function getFullSpecification($id) {
 
             $result = $conn->query($query);
             $phones = [];
-            $processedIds = []; // Array untuk menyimpan ID yang telah diproses
+            $processedIds = [];
 
             if ($result) {
                 if ($result->num_rows > 0) {
@@ -254,15 +248,12 @@ function getFullSpecification($id) {
                         $antutuScore = $row['antutu_10'];
                         $id = $row['id'];
 
-                        // Periksa apakah ID sudah diproses sebelumnya
                         if (in_array($id, $processedIds)) {
-                            continue; // Lewati ID yang duplikat
+                            continue;
                         }
 
-                        // Tambahkan ID ke array jika belum diproses
                         $processedIds[] = $id;
 
-                        // Menghitung skor akhir sesuai kebutuhan
                         switch ($kebutuhan) {
                             case 'gaming':
                                 $scoreTable = generateTable('Gaming', ['RAM (GB)', 'Memori Internal (GB)', 'Skor AnTuTu', 'Kapasitas Baterai', 'Technology'], $row, $antutuScore);
@@ -287,15 +278,13 @@ function getFullSpecification($id) {
                         ];
                     }
 
-                    // Urutkan hasil berdasarkan skor akhir
                     usort($phones, function($a, $b) {
                         return $b['totalScore'] <=> $a['totalScore'];
                     });
 
-                    // Ambil 10 item pertama
                     $phones = array_slice($phones, 0, 10);
 
-                    $counter = 1; // Inisialisasi nomor urut
+                    $counter = 1;
                     foreach ($phones as $phone) {
                         $row = $phone['row'];
                         $scoreTable = $phone['scoreTable'];
@@ -325,24 +314,21 @@ function getFullSpecification($id) {
                         echo '<p class="card-text"><strong>Fitur:</strong> ' . $fiturString . '</p>';
                         echo '<p class="card-price">' . $harga . '</p>';
 
-                        // Menampilkan skor akhir sesuai kebutuhan
-                        echo '<p class="card-text"><strong>Skor akhir ' . ucfirst(str_replace('_', ' ', $kebutuhan)) . ':</strong> ' . number_format($scoreTable['totalScore'], 1) . '</p>';
+                        echo '<p class="card-score">' . number_format($scoreTable['totalScore'], 1) . '</p>';
 
                         echo '<div class="card-buttons">';
-                        echo '<button class="btn-yellow toggle-table">Perhitungan</button>';
-                        echo '<a href="https://forms.gle/ik7qbmuzU4ELgLdz5" class="btn-green" target="_blank">Penilaian</a>';
-                        echo '<button class="btn-blue" onclick="showSpecification(' . $id . ')">Spesifikasi</button>';
+                        echo '<button class="toggle-table btn"><i class="fa-solid fa-superscript"></i></button>';
+                        echo '<button class="btn-blue" onclick="showSpecification(' . $id . ')">Spesifikasi Lengkap</button>';
                         echo '</div>';
                         echo '<div class="table-container hidden">';
 
-                        // Menampilkan tabel sesuai kebutuhan
                         echo $scoreTable['table'];
 
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
-                        $counter++; // Tingkatkan nomor urut
+                        $counter++;
                     }
                 } else {
                     echo '<p>Tidak ada smartphone yang sesuai dengan kriteria.</p>';
@@ -356,7 +342,6 @@ function getFullSpecification($id) {
         ?>
     </div>
 
-    <!-- Modal untuk menampilkan spesifikasi -->
     <div id="specificationModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -366,6 +351,64 @@ function getFullSpecification($id) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../asset/js/hasilna.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.card').click(function() {
+                var id = $(this).find('.btn-blue').attr('onclick').match(/\d+/)[0];
+                showSpecification(id);
+            });
+
+            $('.toggle-table').click(function(event) {
+                event.stopPropagation();
+                $(this).closest('.card').find('.table-container').toggleClass('hidden');
+            });
+
+            $('.btn-blue').click(function(event) {
+                event.stopPropagation();
+            });
+
+            // Fungsi untuk menampilkan SweetAlert2
+            function showAlert() {
+                Swal.fire({
+                    title: 'Bagaimana Sistemnya?',
+                    text: 'Bisa tolong klik tombol penilaian dibawah ini ga?',
+                    icon: 'question',
+                    confirmButtonText: 'OK',
+                    showCloseButton: true, // Menambahkan tombol close
+                    allowOutsideClick: true, // Mengaktifkan penutupan dengan klik di luar
+                    showCancelButton: false, // Menghilangkan tombol cancel
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.open('https://forms.gle/ik7qbmuzU4ELgLdz5', '_blank');
+                    }
+                });
+            }
+            // Menampilkan pop-up setiap 30 detik
+            setInterval(showAlert, 45000);
+        });
+
+        function showSpecification(id) {
+            $.ajax({
+                url: 'get_specification.php',
+                method: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    $('#specificationContent').html(response);
+                    $('#specificationModal').show();
+                }
+            });
+        }
+
+        $('.close').click(function() {
+            $('#specificationModal').hide();
+        });
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('specificationModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

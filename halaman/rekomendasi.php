@@ -48,16 +48,23 @@ if ($result->num_rows > 0) {
             </div>
 
             <div class="form-group">
-                <label>Pilih Brand</label>
+                <label>Pilih Merek</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="selectAllBrands">
+                    <label class="form-check-label" for="selectAllBrands">
+                        Pilih Semua Merek
+                    </label>
+                </div>
                 <?php foreach ($brands as $brand): ?>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="brand[]" value="<?php echo htmlspecialchars($brand); ?>" id="brand-<?php echo htmlspecialchars($brand); ?>">
+                        <input class="form-check-input brand-checkbox" type="checkbox" name="brand[]" value="<?php echo htmlspecialchars($brand); ?>" id="brand-<?php echo htmlspecialchars($brand); ?>">
                         <label class="form-check-label" for="brand-<?php echo htmlspecialchars($brand); ?>">
                             <?php echo htmlspecialchars($brand); ?>
                         </label>
                     </div>
                 <?php endforeach; ?>
             </div>
+
 
             <div class="form-group">
                 <label for="hargaRange">Rentang Harga</label>
@@ -68,27 +75,32 @@ if ($result->num_rows > 0) {
             </div>
 
             <div class="form-group">
-                <label>Pilih Fitur</label>
+                <label>Pilih Fitur Wajib</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="fitur[]" value="nfc" id="fitur-nfc">
+                    <input class="form-check-input" type="checkbox" id="selectAllFeatures">
+                    <label class="form-check-label" for="selectAllFeatures">
+                        Pilih Semua Fitur
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input feature-checkbox" type="checkbox" name="fitur[]" value="nfc" id="fitur-nfc">
                     <label class="form-check-label" for="fitur-nfc">
                         NFC
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="fitur[]" value="waterproof" id="fitur-waterproof">
+                    <input class="form-check-input feature-checkbox" type="checkbox" name="fitur[]" value="waterproof" id="fitur-waterproof">
                     <label class="form-check-label" for="fitur-waterproof">
-                        Waterproof
+                        Tahan Air
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="fitur[]" value="jack_3_5_mm" id="fitur-jack_3_5_mm">
+                    <input class="form-check-input feature-checkbox" type="checkbox" name="fitur[]" value="jack_3_5_mm" id="fitur-jack_3_5_mm">
                     <label class="form-check-label" for="fitur-jack_3_5_mm">
-                        Jack 3.5 mm
+                        Jack Audio
                     </label>
                 </div>
             </div>
-
             <button type="submit" class="btn btn-dark btn-lg btn-block btn-animated">Dapatkan Rekomendasi</button>
         </form>
     </div>

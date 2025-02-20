@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['smartphone1']) && isse
         <form id="perbandinganForm" method="POST">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="brand1">Pilih Brand Pertama</label>
+                    <label for="brand1">Pilih Merek Pertama</label>
                     <select class="form-control" id="brand1" name="brand1">
                         <?php foreach ($brands as $brand): ?>
                             <option value="<?php echo htmlspecialchars($brand); ?>">
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['smartphone1']) && isse
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="brand2">Pilih Brand Kedua</label>
+                    <label for="brand2">Pilih Merek Kedua</label>
                     <select class="form-control" id="brand2" name="brand2">
                         <?php foreach ($brands as $brand): ?>
                             <option value="<?php echo htmlspecialchars($brand); ?>">
