@@ -27,14 +27,20 @@ if ($result->num_rows > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekomendasi - EzPhone-Guide</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="../asset/css/style.css">
     <link rel="stylesheet" href="../asset/css/rekomendasi.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mt-5">Rekomendasi Smartphone</h1>
+        <h1 class="text-center mt-5">
+            Rekomendasi Smartphone
+            <button type="button" class="btn btn-secondary btn-sm btn-custom" data-toggle="modal" data-target="#howToUseModal">
+                <i class="fas fa-question"></i>
+            </button>
+
+        </h1>
 
         <form id="rekomendasiForm" action="hasil.php" method="POST">
             <div class="form-group">
@@ -64,7 +70,6 @@ if ($result->num_rows > 0) {
                     </div>
                 <?php endforeach; ?>
             </div>
-
 
             <div class="form-group">
                 <label for="hargaRange">Rentang Harga</label>
@@ -104,7 +109,32 @@ if ($result->num_rows > 0) {
             <button type="submit" class="btn btn-dark btn-lg btn-block btn-animated">Dapatkan Rekomendasi</button>
         </form>
     </div>
-<br><br>
+
+    <!-- Modal -->
+    <div class="modal fade" id="howToUseModal" tabindex="-1" aria-labelledby="howToUseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="howToUseModalLabel">Cara Mengisi Form Inputan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>1. Silahkan Pilih kebutuhan Anda dari pilihan Kebutuhan.</p>
+                    <p>2. Lalu Pilih merek smartphone yang Anda sukai (bisa lebih dari 1).</p>
+                    <p>3. Setelah itu Tentukan rentang harga minimal dan maksimal sesuai dengan budget Anda.</p>
+                    <p>4. Bisa juga dengan memilih fitur wajib yang Anda inginkan (bisa pilih lebih dari 1).</p>
+                    <p>5. Dan Terakhir Klik "Dapatkan Rekomendasi" untuk mendapatkan rekomendasi smartphone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
