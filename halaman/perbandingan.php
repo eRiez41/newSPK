@@ -104,7 +104,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['smartphone1']) && isse
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mt-5">Perbandingan Smartphone</h1>
+        <h1 class="text-center mt-5">Perbandingan Smartphone
+        <button type="button" class="btn btn-success btn-sm btn-custom" onclick="window.open('https://forms.gle/ik7qbmuzU4ELgLdz5', '_blank')">
+        Penilaian
+    </button>
+        </h1>
 
         <form id="perbandinganForm" method="POST">
             <div class="row">

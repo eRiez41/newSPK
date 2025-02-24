@@ -184,8 +184,11 @@ function getFullSpecification($id) {
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mt-5">Hasil Rekomendasi Smartphone</h1>
-
+        <h1 class="text-center mt-5">Hasil Rekomendasi Smartphone
+        <button type="button" class="btn btn-success btn-sm btn-custom" onclick="window.open('https://forms.gle/ik7qbmuzU4ELgLdz5', '_blank')">
+        Penilaian
+    </button>
+            </h1>
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $kebutuhan = isset($_POST['kebutuhan']) ? $_POST['kebutuhan'] : 'Tidak dipilih';
