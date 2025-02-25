@@ -36,9 +36,10 @@ if ($result->num_rows > 0) {
     <div class="container mt-5">
         <h1 class="text-center mt-5">
             Rekomendasi Smartphone
-            <button type="button" class="btn btn-secondary btn-sm btn-custom" data-toggle="modal" data-target="#howToUseModal">
+            <button type="button" id="helpButton" class="btn btn-secondary btn-sm btn-custom" data-toggle="modal" data-target="#howToUseModal">
                 <i class="fas fa-question"></i>
             </button>
+
 
         </h1>
 
@@ -142,5 +143,12 @@ if ($result->num_rows > 0) {
     <script src="../asset/js/script.js"></script>
     <script src="../asset/js/rekomendasi.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Memicu klik pada tombol "?" saat halaman di-load
+        $('#helpButton').click();
+    });
+</script>
+
 </body>
 </html>
